@@ -53,14 +53,15 @@ public class BaseClass {
         String username = config.getProperty("username");
         String password = config.getProperty("password");
         LoginPage login = new LoginPage(driver);
-//        login.setUserName(username);
-//        login.clickNext();
-//        login.setPassword(password);
-//        login.clickLogin();
-//        login.clckSessionYes();
-//        Thread.sleep(100);
+        login.setUserName(username);
+        login.clickNext();
+        login.setPassword(password);
+        login.clickLogin();
+        login.clckSessionYes();
+        Thread.sleep(100);
 //        takeScreenshot("Login Page");
     }
+
 
     // Method to capture screenshots during test execution
     public static String captureScreen(String tname) {

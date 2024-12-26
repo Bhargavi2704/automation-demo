@@ -3,22 +3,63 @@ package pageObjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 public class LoginPage extends BasePage {
     public LoginPage(WebDriver driver) {
         super(driver);
     }
 
-    public void LoginProcess(String optionText, String optionValue, String optionbtn) {
-        String LoginXpath = "//div[@class='inputrow']//input[@type='" + optionText + "']";
+    @FindBy(xpath = "//*[@id=\"txtLoginUserID\"]")
+    WebElement txtUsername;
+    @FindBy(xpath = "//*[@id=\"btnLoginNext\"]")
+    WebElement lckNext;
+    @FindBy(xpath = "//*[@id=\"txtLoginPassword\"]")
+    WebElement txtPassword;
+    @FindBy(xpath = "//*[@id=\"btnLoginNext\"]")
+    WebElement lckLogin;
+    @FindBy(xpath = "//*[@id=\"divConfirm\"]/div")
+    WebElement sesionWidow;
+    @FindBy(xpath = "//a[normalize-space()='Yes']")
+    WebElement lckYes;
 
-        // Enter the value in the input field
-        enterText(LoginXpath, optionValue);
+    // Conformation auto save window elements
+    @FindBy(xpath = "//div[@id='confirmPopUp']//div[@class='coformationlost']")
+    WebElement tempData;
+    @FindBy(xpath = "//a[@id='confirmNo']")
+    WebElement autoNo;
 
-        // Now interact with the next button
-        String NextbtnXpath = "//div[@class='inputrow']//input[@type='" + optionbtn + "']";
-        WebElement nextButton = driver.findElement(By.xpath(NextbtnXpath));
-        clickElement(nextButton);  // Clicking the Next button
+
+    public void setUserName(String username) {
+        txtUsername.sendKeys(username);
     }
+
+    public void clickNext() {
+        lckNext.click();
+    }
+
+    public void setPassword(String pwd) {
+        txtPassword.sendKeys(pwd);
+    }
+
+    public void clickLogin() {
+        lckLogin.click();
+    }
+
+    public String windowtext() {
+        return sesionWidow.getText();
+    }
+
+    public void clckSessionYes() {
+        try {
+            boolean swin = sesionWidow.isDisplayed();
+            if (swin = true) {
+                lckYes.click();
+            }
+        } catch (Exception e) {
+            e.getMessage();
+        }
+    }
+
 
 }

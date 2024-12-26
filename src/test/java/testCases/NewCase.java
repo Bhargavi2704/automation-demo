@@ -19,6 +19,7 @@ public class NewCase extends BaseClass{
     public void Newcase_testCase() throws InterruptedException {
 
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.LoginProcess("text","username", "Next");
+        login();
+        logger.info("Logged in successfully.");
     }
 }
