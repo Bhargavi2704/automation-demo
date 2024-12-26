@@ -30,7 +30,8 @@ public class AdminPage extends BasePage{
         WebElement optionElement = driver.findElement(By.xpath(dynamicXpath));
 
         // Click the option
-        optionElement.click();
+//        optionElement.click();
+        clickElement(optionElement);
     }
 
 }

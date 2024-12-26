@@ -10,6 +10,7 @@ public class HomePage extends BasePage{
         super(driver);
     }
 
+    //selecting new case webelement
     @FindBy(xpath = "//*[@id=\"NC\"]")
     WebElement lckNewCase;
     @FindBy(xpath = "//*[@id=\"confirmPopUp\"]/div")
@@ -22,10 +23,12 @@ public class HomePage extends BasePage{
     @FindBy(xpath = "//img[@src='images/console-setup.png']")
     WebElement setupIcon;
 
+    //selecting new case method
     public void clickNewcase() {
         clickElement(lckNewCase);
     }
 
+    //method for pop up where it asks for autosave data select yes or no
     public void tempDataWindowNo() {
         try {
             boolean tempWin = autosaveTempDataWindowNo.isDisplayed();
@@ -37,17 +40,20 @@ public class HomePage extends BasePage{
         }
     }
 
+    //method for selecting continue in casesite popup
     public void caseSiteChangePopUpYES() {
         try {
             boolean casesite = caseSitePopup.isDisplayed();
             if (casesite = true) {
                 caseSitePopupYES.click();
+//                clickElement(caseSitePopup);
             }
         } catch (Exception e) {
             e.getMessage();
         }
     }
 
+    //method for selecting setup icon which presents after the notification icon
     public void SetupIcon(String text) {
         setupIcon.click();
         // Dynamic XPath for locating the element
@@ -57,7 +63,9 @@ public class HomePage extends BasePage{
         WebElement dynamicElement = driver.findElement(By.xpath(dynamicXPath));
 
         // Perform click action on the dynamically located element
-        dynamicElement.click();
+//        dynamicElement.click();
+        //calling click method here which we declared in base page
+        clickElement(dynamicElement);
 
     }
 }

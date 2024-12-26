@@ -32,6 +32,7 @@ public class NewCasePage extends BasePage {
         super(driver);
     }
 
+    //using below method we can send value to first name, middle name, last name,suffix etc. text area kind of fields
     public void TextareaField(String fieldName, String inputText) {
         try {
             // Construct the dynamic XPath using the field name
@@ -42,7 +43,9 @@ public class NewCasePage extends BasePage {
             WebElement inputField = driver.findElement(By.xpath(fieldXPath));
 
             // Perform the sendKeys action to enter the text
-            inputField.sendKeys(inputText);
+//            inputField.sendKeys(inputText);
+            // Performed the entertext method which we called in basepage for sending value in text area fields
+            enterText(inputField,inputText);
 
             // Log success
             logger.info("Successfully entered text '" + inputText + "' in the field with name '" + fieldName + "'.");

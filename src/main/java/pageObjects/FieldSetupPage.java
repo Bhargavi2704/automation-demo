@@ -23,15 +23,12 @@ public class FieldSetupPage extends BasePage {
         super(driver);
     }
 
-    @FindBy(xpath = "//a[normalize-space()='Component Information']")
-    private WebElement lckComponentInfo;
 
-    @FindBy(xpath = "//body[1]/form[1]/div[3]/div[21]/div[2]/aside[2]/div[1]/div[2]/div[1]/table[1]/tbody[1]/tr[7]/td[1]")
-    private WebElement verbatim;
-
+    //webelement for hide verbatim dropdown
     @FindBy(xpath = "//select[@id='ddlHideYes']")
     WebElement hideVerbtim;
 
+    //webelement for click and save button
     @FindBy(xpath = "//a[@id='btnSaveFields']")
     private WebElement lckCloseNSave;
 
@@ -45,7 +42,8 @@ public class FieldSetupPage extends BasePage {
             WebElement componentElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(dynamicXpath)));
 
             // Click the element
-            componentElement.click();
+//            componentElement.click();
+            clickElement(componentElement);
             logger.info(componentElement + "is clicked");
         } catch (NoSuchElementException e) {
             System.out.println("Component information not found: " + componentInfo);
@@ -76,7 +74,8 @@ public class FieldSetupPage extends BasePage {
             logger.info("Hovered over the" + rowElement);
             // Now wait for the pencil icon to be clickable and click it
             WebElement pencilIcon = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(pencilIconXpath)));
-            pencilIcon.click();
+//            pencilIcon.click();
+            clickElement(pencilIcon);
 //		        System.out.println("Pencil icon clicked successfully.");
             logger.info("Hovered over the" + rowElement + "and" + pencilIcon + "is clicked for that" + rowElement  );
         } catch (NoSuchElementException e) {
