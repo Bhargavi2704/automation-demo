@@ -27,12 +27,14 @@ public class BasePage {
         }
     }
 
-    public void enterText(String xpath, String value) {
-        WebElement element = driver.findElement(By.xpath(xpath));
-
-        // Clear the field before entering text to avoid appending to existing text
-        element.clear();
-        element.sendKeys(value);  // Send the value to the field
+    public void enterText(WebElement element, String value) {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(element));
+            element.clear();
+            element.sendKeys(value);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to enter text: " + e.getMessage());
+        }
     }
 }
 

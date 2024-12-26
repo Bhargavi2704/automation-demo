@@ -21,5 +21,11 @@ public class NewCase extends BaseClass{
         LoginPage loginPage = new LoginPage(driver);
         login();
         logger.info("Logged in successfully.");
+        HomePage homePage = new HomePage(driver);
+        homePage.clickNewcase();
+        homePage.tempDataWindowNo();
+        homePage.caseSiteChangePopUpYES();
+        logger.info("Navigated to New Case page.");
+
     }
 }

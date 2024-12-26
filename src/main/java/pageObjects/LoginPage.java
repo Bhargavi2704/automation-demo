@@ -31,19 +31,19 @@ public class LoginPage extends BasePage {
 
 
     public void setUserName(String username) {
-        txtUsername.sendKeys(username);
+        enterText(txtUsername, username);  // Using BasePage's enterText method
     }
 
     public void clickNext() {
-        lckNext.click();
+        clickElement(lckNext);  // Using BasePage's clickElement method
     }
 
     public void setPassword(String pwd) {
-        txtPassword.sendKeys(pwd);
+        enterText(txtPassword, pwd);  // Using BasePage's enterText method
     }
 
     public void clickLogin() {
-        lckLogin.click();
+        clickElement(lckLogin);  // Using BasePage's clickElement method
     }
 
     public String windowtext() {
@@ -60,6 +60,4 @@ public class LoginPage extends BasePage {
             e.getMessage();
         }
     }
-
-
 }

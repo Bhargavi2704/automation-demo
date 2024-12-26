@@ -7,13 +7,14 @@ import java.util.Date;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
-import java.io.IOException;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
+
+import testBase.BaseClass;
 
 public class ExtentReportManager extends TestListenerAdapter {
 
@@ -44,6 +45,16 @@ public class ExtentReportManager extends TestListenerAdapter {
     public void onTestSuccess(ITestResult result) {
         test = extent.createTest(result.getMethod().getMethodName());
         test.log(Status.PASS, "Test passed: " + result.getMethod().getMethodName());
+
+        // Capture screenshot even if test passes
+        try {
+            String screenshotPath = BaseClass.captureScreenshot(result.getMethod().getMethodName());
+            if (screenshotPath != null) {
+                test.addScreenCaptureFromPath(screenshotPath);
+            }
+        } catch (Exception e) {
+            test.log(Status.WARNING, "Failed to capture screenshot: " + e.getMessage());
+        }
     }
 
     @Override
@@ -54,7 +65,7 @@ public class ExtentReportManager extends TestListenerAdapter {
 
         // Capture screenshot path if applicable
         try {
-            String screenshotPath = captureScreenshot(result.getMethod().getMethodName());
+            String screenshotPath = BaseClass.captureScreenshot(result.getMethod().getMethodName());
             if (screenshotPath != null) {
                 test.addScreenCaptureFromPath(screenshotPath);
             }
@@ -83,12 +94,5 @@ public class ExtentReportManager extends TestListenerAdapter {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    // Placeholder for screenshot capture
-    private String captureScreenshot(String testName) {
-        // Implement screenshot capture logic here
-        // Return the file path of the screenshot if captured
-        return null;
     }
 }

@@ -1,5 +1,6 @@
 package testBase;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import org.openqa.selenium.WebDriver;
@@ -59,49 +60,60 @@ public class BaseClass {
         login.clickLogin();
         login.clckSessionYes();
         Thread.sleep(100);
-//        takeScreenshot("Login Page");
+    }
+
+    // Method to clear screenshots folder before new test execution
+    public void clearScreenshotsFolder() {
+        File folder = new File("./screenshots");
+        if (folder.exists() && folder.isDirectory()) {
+            for (File file : folder.listFiles()) {
+                if (file.isFile()) {
+                    file.delete(); // Delete each file
+                }
+            }
+            logger.info("Screenshots folder cleared.");
+        } else {
+            folder.mkdirs(); // Create the folder if it doesn't exist
+            logger.info("Screenshots folder created.");
+        }
     }
 
 
     // Method to capture screenshots during test execution
-    public static String captureScreen(String tname) {
+    public static String captureScreenshot(String tname) {
         if (driver == null) {
             System.err.println("Driver is not initialized");
             return null;
         }
 
-        // Generate a timestamp for screenshot filename
+        // Generate timestamp for screenshot filename
         String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 
-        // Check if driver can take a screenshot
         if (driver instanceof TakesScreenshot) {
-            TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
-            File sourceFile = takesScreenshot.getScreenshotAs(OutputType.FILE);
+            TakesScreenshot ts = (TakesScreenshot) driver;
+            File source = ts.getScreenshotAs(OutputType.FILE);
 
-            // Create a directory for screenshots if it doesn't exist
-            File screenshotsDir = new File(System.getProperty("user.dir") + File.separator + "screenshots");
-            if (!screenshotsDir.exists()) {
-                screenshotsDir.mkdirs();
+            // Create directory for screenshots if not exists
+            File screenshotDir = new File(System.getProperty("user.dir") + "/screenshots");
+            if (!screenshotDir.exists()) {
+                screenshotDir.mkdirs();
             }
 
-            // Define the target filepath for the screenshot
-            String targetFilepath = System.getProperty("user.dir") + "\\screenshots\\" + tname + "_" + timestamp + ".png";
-            File targetFile = new File(targetFilepath);
+            // Define the screenshot file path
+            String target = screenshotDir + "/" + tname + "_" + timestamp + ".png";
+            File targetFile = new File(target);
 
             try {
-                // Copy the screenshot to the target location
-                FileHandler.copy(sourceFile, targetFile);
-                System.out.println("Screenshot saved to path: " + targetFilepath);
-                return targetFilepath;
+                FileHandler.copy(source, targetFile);
+                return targetFile.getAbsolutePath(); // Return path of screenshot
             } catch (IOException e) {
                 e.printStackTrace();
-                System.err.println("Failed to save screenshot to path: " + targetFilepath);
                 return null;
             }
         } else {
-            System.err.println("Driver does not support screenshot capture");
-            return null;
+            return null;  // If driver doesn't support screenshot capture
         }
+    }
     }
 
     // Teardown method with @AfterClass to quit the driver after tests
@@ -117,4 +129,4 @@ public class BaseClass {
 //        }
 //    }
 
-}
+
