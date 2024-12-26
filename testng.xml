@@ -7,7 +7,8 @@
     <test name="Login Tests">
         <classes>
             <!-- Add your test classes here -->
-            <class name="testCases.NewCase" />
+            <!--<class name="testCases.NewCase" />-->
+            <class name="testCases.AdminCase" />
         </classes>
     </test>
 </suite>

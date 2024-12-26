@@ -26,6 +26,9 @@ public class NewCase extends BaseClass{
         homePage.tempDataWindowNo();
         homePage.caseSiteChangePopUpYES();
         logger.info("Navigated to New Case page.");
-
+        NewCasePage casePage = new NewCasePage(driver);
+        casePage.TextareaField("first name", "some value");
+        casePage.TextareaField("Middle Name", "some value");
+        casePage.TextareaField("last Name", "some value");
     }
 }
